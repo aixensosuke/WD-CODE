@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VIT Clubs Management</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #2F4F4F;
+        }
+
+        header {
+            background-color: #a2dfa2;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        nav {
+            background-color: #6fa03e;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        nav a:hover {
+            background-color: #547a2d;
+        }
+
+        .club-container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #fff;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            border-radius: 8px;
+        }
+
+        .club-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border-radius: 8px;
+            background: #f9f9f9;
+            transition: transform 0.3s;
+        }
+
+        .club-section:hover {
+            transform: translateY(-5px);
+        }
+
+        .success-story {
+            background: #fff;
+            padding: 20px;
+            margin: 15px 0;
+            border-left: 4px solid #6fa03e;
+            border-radius: 4px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+
+        .success-story:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .committee-member {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px;
+            background: #fff;
+            margin: 10px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+        }
+
+        .committee-member:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background: #6fa03e;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background: #547a2d;
+            transform: translateY(-2px);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            position: relative;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        input, textarea {
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        input:focus, textarea:focus {
+            border-color: #6fa03e;
+            outline: none;
+        }
+
+        .close {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            cursor: pointer;
+            font-size: 24px;
+            color: #666;
+            transition: color 0.3s;
+        }
+
+        .close:hover {
+            color: #000;
+        }
+
+        .success-message {
+            color: #2e7d32;
+            padding: 15px;
+            background: #e8f5e9;
+            border-radius: 6px;
+            display: none;
+            margin-top: 20px;
+            text-align: center;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #6fa03e;
+        }
+
+        .club-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .stat-number {
+            font-size: 24px;
+            font-weight: bold;
+            color: #6fa03e;
+        }
+
+        .club-credentials {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .credential-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            background: white;
+            margin: 10px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+        }
+
+        .credential-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .credential-info {
+            flex: 1;
+        }
+
+        .credential-info h3 {
+            margin: 0 0 5px 0;
+            color: #2F4F4F;
+        }
+
+        .credential-info p {
+            margin: 5px 0;
+            color: #666;
+        }
+
+        /* Enhanced animations */
+        .committee-member, .success-story, .credential-item {
+            opacity: 0;
+            animation: slideIn 0.5s forwards;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Loading state */
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+        }
+
+        /* Empty state */
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #666;
+            background: #f5f5f5;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .login-credentials {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>VIT Clubs Management</h1>
+    </header>
+    
+    <nav>
+        <div>
+            <a href="home.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="academics.html">Academics</a>
+        </div>
+        <a href="login.html" class="login-btn">Login</a>
+    </nav>
+
+    <div class="club-container">
+        <!-- Add new section for login credentials -->
+        <div class="login-credentials">
+            <div class="section-header">
+                <h2>Login Credentials</h2>
+                <button onclick="showModal('login-cred')" class="add-btn">Add Login</button>
+            </div>
+            <div class="login-list"></div>
+        </div>
+
+        <div class="club-stats">
+            <div class="stat-card">
+                <div class="stat-number">12</div>
+                <div>Active Clubs</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">150+</div>
+                <div>Committee Members</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">45</div>
+                <div>Success Stories</div>
+            </div>
+        </div>
+
+        <div class="club-credentials">
+            <div class="section-header">
+                <h2>Club Credentials</h2>
+                <button onclick="showModal('credentials')" class="add-btn">Add Credentials</button>
+            </div>
+            <div class="credentials-list"></div>
+        </div>
+
+        <!-- Club Committee Section -->
+        <div class="club-section" id="committee-section">
+            <div class="section-header">
+                <h2>Club Committee</h2>
+                <button onclick="showModal('committee')" class="add-btn">Add Committee Member</button>
+            </div>
+            <div id="committee-list">
+                <!-- Committee members will be displayed here -->
+            </div>
+        </div>
+
+        <!-- Success Stories Section -->
+        <div class="club-section" id="success-section">
+            <div class="section-header">
+                <h2>Success Stories</h2>
+                <div class="action-buttons">
+                    <button onclick="showModal('story')">Add Story</button>
+                    <button onclick="emailStories()">Email Stories</button>
+                </div>
+            </div>
+            <div id="success-stories">
+                <!-- Success stories will be displayed here -->
+            </div>
+        </div>
+
+        <!-- Add Committee Member Modal -->
+        <div id="committee-modal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="hideModal('committee')">&times;</span>
+                <h2>Add Committee Member</h2>
+                <form id="committee-form">
+                    <input type="text" placeholder="Name" required>
+                    <input type="text" placeholder="Position" required>
+                    <input type="text" placeholder="Club" required>
+                    <button type="submit">Add Member</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Add Success Story Modal -->
+        <div id="story-modal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="hideModal('story')">&times;</span>
+                <h2>Add Success Story</h2>
+                <form id="story-form">
+                    <input type="text" placeholder="Title" required>
+                    <input type="text" placeholder="Club Name" required>
+                    <textarea placeholder="Story Content" required></textarea>
+                    <button type="submit">Add Story</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Add Club Credentials Modal -->
+        <div id="credentials-modal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="hideModal('credentials')">&times;</span>
+                <h2>Add Club Credentials</h2>
+                <form id="credentials-form">
+                    <input type="text" placeholder="Club Name" required>
+                    <input type="text" placeholder="Username" required>
+                    <input type="password" placeholder="Password" required>
+                    <button type="submit">Save Credentials</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Add Login Credentials Modal -->
+        <div id="login-cred-modal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="hideModal('login-cred')">&times;</span>
+                <h2>Add Login Credentials</h2>
+                <form id="login-cred-form">
+                    <input type="text" placeholder="User Role" required>
+                    <input type="text" placeholder="Username" required>
+                    <input type="password" placeholder="Password" required>
+                    <input type="email" placeholder="Email" required>
+                    <button type="submit">Save Login</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="success-message" id="success-message"></div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            // Load initial data
+            loadCommitteeMembers();
+            loadSuccessStories();
+
+            // Committee form submission
+            $('#committee-form').submit(function(e) {
+                e.preventDefault();
+                const inputs = $(this).find('input');
+                const member = {
+                    name: inputs[0].value,
+                    position: inputs[1].value,
+                    club: inputs[2].value
+                };
+                addCommitteeMember(member);
+                hideModal('committee');
+                this.reset();
+            });
+
+            // Success story form submission
+            $('#story-form').submit(function(e) {
+                e.preventDefault();
+                const story = {
+                    title: $(this).find('input')[0].value,
+                    club: $(this).find('input')[1].value,
+                    content: $(this).find('textarea').val()
+                };
+                addSuccessStory(story);
+                hideModal('story');
+                this.reset();
+            });
+
+            // Initialize counters with animation
+            $('.stat-number').each(function() {
+                const $this = $(this);
+                const num = parseInt($this.text());
+                $this.text('0');
+                $({value: 0}).animate({value: num}, {
+                    duration: 1000,
+                    step: function() {
+                        $this.text(Math.floor(this.value));
+                    }
+                });
+            });
+
+            // Enhanced modal handling
+            $('.modal').click(function(e) {
+                if (e.target === this) {
+                    $(this).fadeOut();
+                }
+            });
+
+            // Improve form submissions
+            $('.add-btn').on('click', function() {
+                const modal = $(this).data('modal');
+                $(`#${modal}-modal`).fadeIn();
+            });
+
+            // Success message enhancement
+            function showSuccessMessage(message) {
+                $('#success-message')
+                    .text(message)
+                    .fadeIn()
+                    .delay(2000)
+                    .fadeOut();
+            }
+
+            // Dynamic content loading
+            function refreshLists() {
+                $('#committee-list').fadeOut(200, function() {
+                    loadCommitteeMembers();
+                    $(this).fadeIn(200);
+                });
+                
+                $('#success-stories').fadeOut(200, function() {
+                    loadSuccessStories();
+                    $(this).fadeIn(200);
+                });
+            }
+
+            // Initialize and attach event handlers
+            refreshLists();
+            setInterval(refreshLists, 30000); // Auto refresh every 30 seconds
+
+            // Add credentials handling
+            const storedCredentials = JSON.parse(localStorage.getItem('clubCredentials')) || [];
+            
+            $('#credentials-form').submit(function(e) {
+                e.preventDefault();
+                const formData = {
+                    clubName: $(this).find('input[placeholder="Club Name"]').val(),
+                    username: $(this).find('input[placeholder="Username"]').val(),
+                    password: $(this).find('input[placeholder="Password"]').val(),
+                    timestamp: new Date().toLocaleString()
+                };
+                
+                storedCredentials.push(formData);
+                localStorage.setItem('clubCredentials', JSON.stringify(storedCredentials));
+                
+                displayCredentials();
+                hideModal('credentials');
+                this.reset();
+                showMessage('Credentials saved successfully!');
+            });
+
+            function displayCredentials() {
+                const list = $('.credentials-list');
+                list.empty();
+                
+                storedCredentials.forEach((cred, index) => {
+                    list.append(`
+                        <div class="credential-item">
+                            <div class="credential-info">
+                                <h3>${cred.clubName}</h3>
+                                <p>Username: ${cred.username}</p>
+                                <p>Last Updated: ${cred.timestamp}</p>
+                            </div>
+                            <div class="action-buttons">
+                                <button onclick="viewPassword(${index})">View Password</button>
+                                <button onclick="deleteCredential(${index})">Delete</button>
+                            </div>
+                        </div>
+                    `);
+                });
+            }
+
+            window.viewPassword = function(index) {
+                const password = storedCredentials[index].password;
+                alert(`Password: ${password}`);
+            }
+
+            window.deleteCredential = function(index) {
+                if (confirm('Are you sure you want to delete these credentials?')) {
+                    storedCredentials.splice(index, 1);
+                    localStorage.setItem('clubCredentials', JSON.stringify(storedCredentials));
+                    displayCredentials();
+                    showMessage('Credentials deleted successfully!');
+                }
+            }
+
+            // Initial display
+            displayCredentials();
+
+            // Login credentials handling
+            const storedLogins = JSON.parse(localStorage.getItem('loginCredentials')) || [];
+            
+            $('#login-cred-form').submit(function(e) {
+                e.preventDefault();
+                const formData = {
+                    role: $(this).find('input[placeholder="User Role"]').val(),
+                    username: $(this).find('input[placeholder="Username"]').val(),
+                    password: $(this).find('input[placeholder="Password"]').val(),
+                    email: $(this).find('input[placeholder="Email"]').val(),
+                    timestamp: new Date().toLocaleString()
+                };
+                
+                storedLogins.push(formData);
+                localStorage.setItem('loginCredentials', JSON.stringify(storedLogins));
+                
+                displayLogins();
+                hideModal('login-cred');
+                this.reset();
+                showMessage('Login credentials saved successfully!');
+            });
+
+            function displayLogins() {
+                const list = $('.login-list');
+                list.empty();
+                
+                storedLogins.forEach((login, index) => {
+                    list.append(`
+                        <div class="credential-item">
+                            <div class="credential-info">
+                                <h3>${login.role}</h3>
+                                <p>Username: ${login.username}</p>
+                                <p>Email: ${login.email}</p>
+                                <p>Last Updated: ${login.timestamp}</p>
+                            </div>
+                            <div class="action-buttons">
+                                <button onclick="viewLoginPassword(${index})">View Password</button>
+                                <button onclick="editLogin(${index})">Edit</button>
+                                <button onclick="deleteLogin(${index})">Delete</button>
+                            </div>
+                        </div>
+                    `);
+                });
+            }
+
+            window.viewLoginPassword = function(index) {
+                const password = storedLogins[index].password;
+                alert(`Password: ${password}`);
+            }
+
+            window.editLogin = function(index) {
+                const login = storedLogins[index];
+                const form = $('#login-cred-form');
+                form.find('input[placeholder="User Role"]').val(login.role);
+                form.find('input[placeholder="Username"]').val(login.username);
+                form.find('input[placeholder="Password"]').val(login.password);
+                form.find('input[placeholder="Email"]').val(login.email);
+                
+                showModal('login-cred');
+                storedLogins.splice(index, 1);
+            }
+
+            window.deleteLogin = function(index) {
+                if (confirm('Are you sure you want to delete these login credentials?')) {
+                    storedLogins.splice(index, 1);
+                    localStorage.setItem('loginCredentials', JSON.stringify(storedLogins));
+                    displayLogins();
+                    showMessage('Login credentials deleted successfully!');
+                }
+            }
+
+            // Initial display
+            displayLogins();
+        });
+
+        function showModal(type) {
+            $(`#${type}-modal`).show();
+        }
+
+        function hideModal(type) {
+            $(`#${type}-modal`).hide();
+        }
+
+        function loadCommitteeMembers() {
+            // Simulated data - replace with actual API call
+            const members = [
+                { name: "John Doe", position: "President", club: "Coding Club" },
+                { name: "Jane Smith", position: "Secretary", club: "Design Club" }
+            ];
+            displayCommitteeMembers(members);
+        }
+
+        function loadSuccessStories() {
+            // Simulated data - replace with actual API call
+            const stories = [
+                { title: "Hackathon Winners", club: "Coding Club", content: "Our team won first place..." },
+                { title: "Design Exhibition", club: "Design Club", content: "Successfully organized..." }
+            ];
+            displaySuccessStories(stories);
+        }
+
+        function displayCommitteeMembers(members) {
+            const list = $('#committee-list');
+            list.empty();
+            
+            if (members.length === 0) {
+                showEmptyState(list, 'No committee members added yet. Add your first member!');
+                return;
+            }
+
+            members.forEach((member, index) => {
+                const memberEl = $(`
+                    <div class="committee-member" style="animation-delay: ${index * 0.1}s">
+                        <div>
+                            <h3>${member.name}</h3>
+                            <p>${member.position} - ${member.club}</p>
+                        </div>
+                        <div class="action-buttons">
+                            <button onclick="editMember(${index})">Edit</button>
+                            <button onclick="deleteMember(${index})">Delete</button>
+                        </div>
+                    </div>
+                `);
+                list.append(memberEl);
+            });
+        }
+
+        function displaySuccessStories(stories) {
+            const container = $('#success-stories');
+            container.empty();
+
+            if (stories.length === 0) {
+                showEmptyState(container, 'No success stories yet. Share your first story!');
+                return;
+            }
+
+            stories.forEach((story, index) => {
+                const storyEl = $(`
+                    <div class="success-story" style="animation-delay: ${index * 0.1}s">
+                        <h3>${story.title}</h3>
+                        <h4>${story.club}</h4>
+                        <p>${story.content}</p>
+                        <div class="action-buttons">
+                            <button onclick="editStory(${index})">Edit</button>
+                            <button onclick="deleteStory(${index})">Delete</button>
+                        </div>
+                    </div>
+                `);
+                container.append(storyEl);
+            });
+        }
+
+        function emailStories() {
+            // Simulate email sending
+            showMessage("Success stories have been emailed to all VIT students!");
+        }
+
+        function showMessage(message) {
+            const messageDiv = $('#success-message');
+            messageDiv.text(message).fadeIn();
+            setTimeout(() => messageDiv.fadeOut(), 3000);
+        }
+
+        function showLoading(container) {
+            $(container).html('<div class="loading">Loading...</div>');
+        }
+
+        function showEmptyState(container, message) {
+            $(container).html(`<div class="empty-state">${message}</div>`);
+        }
+
+        // Update loading behavior
+        function refreshLists() {
+            showLoading('#committee-list');
+            showLoading('#success-stories');
+
+            setTimeout(() => {
+                loadCommitteeMembers();
+                loadSuccessStories();
+            }, 500); // Simulate loading delay
+        }
+
+        // Handle resize events smoothly
+        let resizeTimeout;
+        $(window).resize(function() {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(function() {
+                refreshLists();
+            }, 250);
+        });
+    </script>
+</body>
+</html>

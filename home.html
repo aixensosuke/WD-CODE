@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vishwakarma Institute of Technology</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            color: #2F4F4F; /* Dark green color */
+            margin: 10;
+            padding: 0;
+            background-color: #f4f4f4;
+           width: 95%;
+        }
+        .container {
+            width: 95%;
+            margin: auto;
+            background-color: #ffffff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        header {
+            background-color: #a2dfa2; /* Dark green */
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        #logo {
+            max-width: 1200px;
+        }
+        nav {
+            background-color: #6fa03e;
+            overflow: hidden;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+        nav a {
+            float: left;
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+        nav a:hover {
+            background-color: #547a2d;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .login-btn {
+            float: right !important;
+            background-color: #547a2d;
+            padding: 10px 20px !important;
+            border-radius: 5px;
+            margin: 5px 15px;
+            transition: background-color 0.3s ease;
+        }
+
+        .login-btn:hover {
+            background-color: #3c5720;
+        }
+
+        .nav-links {
+            float: left;
+            display: flex;
+            align-items: center;
+        }
+        #photos {
+            display: flex;
+            justify-content: space-around;
+            padding: 20PX 0;
+     
+        }
+        #photos img {
+            max-width: 100%
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+        }
+        section {
+            padding: 20px;
+            margin-bottom: 20px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+        footer {
+           
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+        iframe {
+            width: 100%;
+            height: 450px;
+            border: 0;
+        }
+        /* Add new styles */
+        .nav-links a {
+            transition: all 0.3s ease;
+        }
+        
+        .section-fade {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 1s ease;
+        }
+        
+        .section-fade.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        #scroll-top {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #547a2d;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            z-index: 1000;
+        }
+
+        .wp-block-columns img {
+            transition: transform 0.3s ease;
+        }
+
+        .wp-block-columns img:hover {
+            transform: scale(1.05);
+        }
+
+        .nav-links a {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: white;
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        #courses li {
+            cursor: pointer;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+
+        #courses li:hover {
+            background: #f0f0f0;
+            padding-left: 20px;
+        }
+
+        .section-title {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #6fa03e;
+            transition: width 0.5s;
+        }
+
+        .section-title.visible::after {
+            width: 100%;
+        }
+
+        
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .mobile-menu-button {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-button {
+                display: block;
+            }
+            
+            .nav-links {
+                display: none;
+                width: 100%;
+                flex-direction: column;
+            }
+
+            .nav-links.mobile-open {
+                display: flex;
+            }
+        }
+
+        .error {
+            border-color: red !important;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <img src="D:\Group-148284.webp" alt="Vishwakarma Institute of Technology Logo" id="logo" width="600px" height="150px">
+            <nav>
+                <div class="nav-links">
+                    <a href="about.html">About</a>
+                    <a href="academics.html">Academics</a>
+                    <a href="placements.html">Placements</a>
+                    <a href="clubs.html">Committee</a>
+                </div>
+                <a href="login.html" class="login-btn">Login</a>
+            </nav>
+        </header>
+        <main>
+            <section id="photos">
+                <img src="D:\download.jpg" alt="CAMPUS" width="800" height="400"> 
+                <img src="data:image/jpeg;base64,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" alt="Campus" width="800" height="400">
+                
+            </section>
+          
+            <body>
+                 <header> 
+                    <h1>Vishwakarma Institute of Technology (VIT) Pune</h1> 
+                </header> 
+                <section id="about">
+                     <h2>About VIT Pune</h2>
+                      <p>Vishwakarma Institute of Technology (VIT) Pune is an autonomous engineering college affiliated to Savitribai Phule Pune University. It offers a wide range of courses in the fields of Engineering, Management, and Computer Applications at both undergraduate and postgraduate levels.</p>
+                    </section> 
+                    <section id="mission"> 
+                        <h2>Our Mission</h2>
+                         <p>VIT Pune aims to provide high-quality technical education with a focus on research, innovation, and development. Our mission is to produce skilled professionals who are prepared to meet the challenges of the global industry.</p>
+                         </section>
+                          <section id="vision">
+                             <h2>Our Vision</h2>
+                              <p>Our vision is to be a globally recognized institute known for excellence in education and research, contributing to the nation's technological and socio-economic development.</p> 
+                            </section> 
+                            <section id="courses">
+                                 <h2>Our Courses</h2>
+                                  <p>We offer a variety of undergraduate and postgraduate programs including:</p>
+                                   <ul>
+                                     <li>Information Technology</li>
+                                      <li>Mechanical Engineering</li>
+                                       <li>Electronics and Telecommunication Engineering</li>
+                                        <li>Computer Engineering</li>
+                                         <li>Management Studies</li>
+                                         </ul> 
+            </section>
+
+
+
+
+           </body>
+           
+           <div class="wp-block-group alignfull py-3 has-background" style="background-color:#ebf9ff"><div class="wp-block-group__inner-container is-layout-constrained wp-block-group-is-layout-constrained">
+          
+            
+            
+            
+                    <div class="block-8ddf788c-6c47-4aa8-b741-b78e6291c97a areoi-tabs">
+                        
+            
+                    <nav class="block-0a5b89a1-719e-480b-b430-6a2dc837f7a9 nav nav-tabs justify-content-center">
+                        
+            
+                    <a class="block-7872a52f-8a0e-4c26-86f4-2d7eb6a8a71b nav-link active" href="#tab-1">
+                        LinkedIn
+                    </a>
+                
+            
+            
+                    <a class="block-ef42188e-9d8d-4b83-b7e3-8e60f4886be5 nav-link" href="#tab-2">
+                        Instagram
+                    </a>
+                
+            
+            
+                    <a class="block-7bdca6ed-32a0-4e3b-a8f3-21bfb50e3fb2 nav-link" href="#tab-3">
+                        Facebook
+                    </a>
+                
+             
+                    </nav>
+                
+            
+            
+                    <div id="tab-1" class="block-d7cc5887-77d7-4771-93b3-9e42e45f1713 areoi-element p-5 mx-5 followus tab-pane">
+                        
+                        
+            
+            <figure class="wp-block-image size-large is-style-default px-5 py-3 w-100 social-image d-none"><img loading="lazy" decoding="async" width="1024" height="684" src="https://betawp.vit.edu/wp-content/uploads/2024/03/home-insta-1024x684.webp" alt="" class="wp-image-204" srcset="https://www.vit.edu/wp-content/uploads/2024/03/home-insta-1024x684.webp 1024w, https://www.vit.edu/wp-content/uploads/2024/03/home-insta-300x200.webp 300w, https://www.vit.edu/wp-content/uploads/2024/03/home-insta-768x513.webp 768w, https://www.vit.edu/wp-content/uploads/2024/03/home-insta-930x620.webp 930w, https://www.vit.edu/wp-content/uploads/2024/03/home-insta.webp 1179w" sizes="auto, (max-width: 1024px) 100vw, 1024px"></figure>
+            
+            
+            
+            
+            
+            
+            
+            <div class="wp-block-columns is-layout-flex wp-container-core-columns-is-layout-18 wp-block-columns-is-layout-flex">
+            <div class="wp-block-column is-layout-flow wp-block-column-is-layout-flow">
+            <figure class="wp-block-image size-large"><a href="https://www.linkedin.com/posts/vishwakarma-institute-of-technology-pune_ieee-smartcomputing-informatics-activity-7175380386477195264-pwOn?utm_source=share&amp;utm_medium=member_desktop" target="_blank" rel="noreferrer noopener"><img loading="lazy" decoding="async" width="1024" height="1024" src="https://www.vit.edu/wp-content/uploads/2024/03/vit-linkedin-01-1024x1024.webp" alt="" class="wp-image-2510" title="" srcset="https://www.vit.edu/wp-content/uploads/2024/03/vit-linkedin-01-1024x1024.webp 1024w, https://www.vit.edu/wp-content/uploads/2024/03/vit-linkedin-01-300x300.webp 300w, https://www.vit.edu/wp-content/uploads/2024/03/vit-linkedin-01-150x150.webp 150w, https://www.vit.edu/wp-content/uploads/2024/03/vit-linkedin-01-768x768.webp 768w, https://www.vit.edu/wp-content/uploads/2024/03/vit-linkedin-01.webp 1536w" sizes="auto, (max-width: 1024px) 100vw, 1024px"></a></figure>
+            </div>
+            
+            
+            
+            <div class="wp-block-column is-layout-flow wp-block-column-is-layout-flow">
+            <figure class="wp-block-image size-large"><a href="https://www.linkedin.com/posts/vishwakarma-institute-of-technology-pune_championsonthepitch-victorycelebration-cricketchampions-activity-7174791007794782208-bTGh?utm_source=share&amp;utm_medium=member_desktop" target="_blank" rel="noreferrer noopener"><img loading="lazy" decoding="async" width="1024" height="1024" src="https://www.vit.edu/wp-content/uploads/2024/03/vit-linkedin-02-1024x1024.webp" alt="" class="wp-image-2511" srcset="https://www.vit.edu/wp-content/uploads/2024/03/vit-linkedin-02-1024x1024.webp 1024w, https://www.vit.edu/wp-content/uploads/2024/03/vit-linkedin-02-300x300.webp 300w, https://www.vit.edu/wp-content/uploads/2024/03/vit-linkedin-02-150x150.webp 150w, https://www.vit.edu/wp-content/uploads/2024/03/vit-linkedin-02-768x768.webp 768w, https://www.vit.edu/wp-content/uploads/2024/03/vit-linkedin-02.webp 1536w" sizes="auto, (max-width: 1024px) 100vw, 1024px"></a></figure>
+            </div>
+            
+            
+            
+            <div class="wp-block-column is-layout-flow wp-block-column-is-layout-flow">
+            <figure class="wp-block-image size-large"><a href="https://www.linkedin.com/posts/vishwakarma-institute-of-technology-pune_vaishnavideshmukh-successstory-congratulations-activity-7174294760071852032-7BVk?utm_source=share&amp;utm_medium=member_desktop" target="_blank" rel="noreferrer noopener"><img loading="lazy" decoding="async" width="1024" height="1024" src="https://www.vit.edu/wp-content/uploads/2024/03/vit-linkedin-03-1024x1024.webp" alt="" class="wp-image-2512" srcset="https://www.vit.edu/wp-content/uploads/2024/03/vit-linkedin-03-1024x1024.webp 1024w, https://www.vit.edu/wp-content/uploads/2024/03/vit-linkedin-03-300x300.webp 300w, https://www.vit.edu/wp-content/uploads/2024/03/vit-linkedin-03-150x150.webp 150w, https://www.vit.edu/wp-content/uploads/2024/03/vit-linkedin-03-768x768.webp 768w, https://www.vit.edu/wp-content/uploads/2024/03/vit-linkedin-03.webp 1536w" sizes="auto, (max-width: 1024px) 100vw, 1024px"></a></figure>
+            </div>
+            </div>
+            
+            
+                         
+                    </div>
+                
+            
+            
+                    <div id="tab-2" class="block-42d81d6c-ce6d-4eee-829f-a5db03eb5b6d areoi-element p-5 mx-5 followus tab-pane d-none">
+                        
+                        
+            
+            <div class="wp-block-columns is-layout-flex wp-container-core-columns-is-layout-19 wp-block-columns-is-layout-flex">
+            <div class="wp-block-column is-layout-flow wp-block-column-is-layout-flow">
+            <figure class="wp-block-image size-large"><a href="https://www.instagram.com/p/C9mtr9pvmWJ/" target="_blank" rel="noreferrer noopener"><img loading="lazy" decoding="async" width="1024" height="1024" src="https://www.vit.edu/wp-content/uploads/2024/09/insta01-1024x1024.jpg" alt="" class="wp-image-5221" title="" srcset="https://www.vit.edu/wp-content/uploads/2024/09/insta01-1024x1024.jpg 1024w, https://www.vit.edu/wp-content/uploads/2024/09/insta01-300x300.jpg 300w, https://www.vit.edu/wp-content/uploads/2024/09/insta01-150x150.jpg 150w, https://www.vit.edu/wp-content/uploads/2024/09/insta01-768x768.jpg 768w, https://www.vit.edu/wp-content/uploads/2024/09/insta01.jpg 1080w" sizes="auto, (max-width: 1024px) 100vw, 1024px"></a></figure>
+            </div>
+            
+            
+            
+            <div class="wp-block-column is-layout-flow wp-block-column-is-layout-flow">
+            <figure class="wp-block-image size-large"><a href="https://www.instagram.com/p/C6qsb4XoHR1/" target="_blank" rel="noreferrer noopener"><img loading="lazy" decoding="async" width="1024" height="1024" src="https://www.vit.edu/wp-content/uploads/2024/09/insta02-1024x1024.jpg" alt="" class="wp-image-5222" srcset="https://www.vit.edu/wp-content/uploads/2024/09/insta02-1024x1024.jpg 1024w, https://www.vit.edu/wp-content/uploads/2024/09/insta02-300x300.jpg 300w, https://www.vit.edu/wp-content/uploads/2024/09/insta02-150x150.jpg 150w, https://www.vit.edu/wp-content/uploads/2024/09/insta02-768x768.jpg 768w, https://www.vit.edu/wp-content/uploads/2024/09/insta02.jpg 1080w" sizes="auto, (max-width: 1024px) 100vw, 1024px"></a></figure>
+            </div>
+            
+            
+            
+            <div class="wp-block-column is-layout-flow wp-block-column-is-layout-flow">
+                        scrollTop: $(hash).offset().top
+                    }, 800);
+                }
+            });
+
+            // Scroll to top button
+            $(window).scroll(function() {
+                if ($(this).scrollTop() > 300) {
+                    $('#scroll-top').fadeIn();
+                } else {
+                    $('#scroll-top').fadeOut();
+                }
+            });
+
+            $('#scroll-top').click(function() {
+                $('html, body').animate({scrollTop: 0}, 800);
+                return false;
+            });
+
+            // Section fade in animation
+            function checkVisible() {
+                $('.section-fade').each(function() {
+                    if ($(this).offset().top < $(window).scrollTop() + $(window).height() * 0.75) {
+                        $(this).addClass('visible');
+                    }
+                });
+            }
+
+            // Add section-fade class to sections
+            $('section').addClass('section-fade');
+            
+            // Check on load and scroll
+            checkVisible();
+            $(window).scroll(checkVisible);
+
+            // Social media tabs
+            $('.nav-tabs a').click(function(e) {
+                e.preventDefault();
+                $(this).tab('show');
+            });
+
+            // Image preview on hover
+            $('.wp-block-image img').hover(
+                function() { $(this).css('cursor', 'pointer'); },
+                function() { $(this).css('cursor', 'auto'); }
+            );
+        });
+    </script>
+</body>
+</html>
+
+          
+            
+            <!-- wp:column {"width":"66.66%","className":"pt-5 footer-padding"} -->
+            <div class="wp-block-column pt-5 footer-padding" style="flex-basis:66.66%"><!-- wp:paragraph {"style":{"elements":{"link":{"color":{"text":"var:preset|color|neve-link-hover-color"}}}},"textColor":"neve-link-hover-color"} -->
+            <p class="has-neve-link-hover-color-color has-text-color has-link-color">Vishwakarma Institute of Technology No.666, Upper Indiranagar,Bibwewadi, Upper Indira Nagar, Bibvewadi, Pune, Maharashtra 411037</p>
+            <!-- /wp:paragraph -->
+            
+            <!-- wp:columns -->
+            <div class="wp-block-columns"><!-- wp:column -->
+            <div class="wp-block-column"><!-- wp:paragraph {"style":{"elements":{"link":{"color":{"text":"var:preset|color|neve-link-hover-color"}}},"typography":{"fontStyle":"normal","fontWeight":"700"}},"textColor":"neve-link-hover-color"} -->
+            <p class="has-neve-link-hover-color-color has-text-color has-link-color" style="font-style:normal;font-weight:700"><img class="wp-image-104" style="width: 24px;" src="https://www.vit.edu/chemical/wp-content/uploads/2024/03/phone-icon.png" alt="">  91 - 20 - 2420 2114 / 2428 3001</p>
+            <!-- /wp:paragraph --></div>
+            <!-- /wp:column -->
+            
+            <!-- wp:column -->
+            <div class="wp-block-column"><!-- wp:paragraph {"style":{"elements":{"link":{"color":{"text":"var:preset|color|neve-link-hover-color"}}},"typography":{"fontStyle":"normal","fontWeight":"700"}},"textColor":"neve-link-hover-color"} -->
+            <p class="has-neve-link-hover-color-color has-text-color has-link-color" style="font-style:normal;font-weight:700"><img class="wp-image-105" style="width: 24px;" src="https://www.vit.edu/chemical/wp-content/uploads/2024/03/mail-icon.png" alt="">  admissions@vit.edu.</p>
+            <!-- /wp:paragraph --></div>
+            <!-- /wp:column --></div>
+            <!-- /wp:columns --></div>
+            <!-- /wp:column --></div>
+            <!-- /wp:columns -->	</div>
+            </section>
+        
+            </section>
+        </footer>
+        <footer>
+        <div class="address-section">
+            <p>Vishwakarma Institute of Technology<br>
+            No.666, Upper Indiranagar, Bibwewadi<br>
+            Pune, Maharashtra 411037</p>
+        </div>
+        <div class="contact-info">
+            <p>Phone: 91 - 20 - 2420 2114 / 2428 3001</p>
+            <p>Email: admissions@vit.edu</p>
+        </div>
+        <div class="copyright">
+            © 2024 VIT Pune. All rights reserved.
+        </div>
+    </footer>
+    </div>
+</body>
+</html>
+
